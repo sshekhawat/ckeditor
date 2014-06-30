@@ -6,12 +6,16 @@ use Yii;
 
 class CKEditor extends Widget
 {
+	const TYPE_FULL = 'full';
+	const TYPE_STANDARD = 'standard';
+	const TYPE_SIMPLE = 'simple';
+
 	/**
 	 * "full", "standard", "simple"
 	 *
 	 * @var string
 	 */
-	public $type = 'standard';
+	public $type = self::TYPE_SIMPLE;
 
 	/**
 	 * @var string
