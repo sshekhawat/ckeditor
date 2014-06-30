@@ -1,0 +1,9 @@
+{
+	"name": "webvimark/ckeditor",
+	"description": "Ckeditor with file browser for Yii 2",
+	"autoload": {
+		"psr-4": {
+			"webvimark\\extensions\\ckeditor\\": ""
+		}
+	}
+}
