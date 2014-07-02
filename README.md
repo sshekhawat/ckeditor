@@ -32,5 +32,7 @@ Possible settings (with default values)
 ---------------------------------------
 
 'type' => CKEditor::TYPE_STANDARD,
+
 'height'=>'200px',
+
 'language'=>Yii::$app->language,
