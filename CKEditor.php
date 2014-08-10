@@ -15,7 +15,7 @@ class CKEditor extends Widget
 	 *
 	 * @var string
 	 */
-	public $type = self::TYPE_SIMPLE;
+	public $type = self::TYPE_STANDARD;
 
 	/**
 	 * @var string
@@ -63,7 +63,7 @@ JS;
 		{
 			$script = "
 				CKEDITOR.config.toolbar = [
-					['Maximize','Format','Bold','Italic','Underline','StrikeThrough','-','NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Table','-','Link', 'Unlink']
+					['Maximize','Format','Bold','Italic','Underline','StrikeThrough','-','NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Link', 'Unlink']
 				] ;
 			";
 		}
@@ -74,7 +74,7 @@ JS;
 					['Maximize','Format'],
 					['Bold','Italic','Underline','StrikeThrough','-','Print'],
 					['NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-					['Image','Table','-','Link']
+					['Image','Table','-','Link', 'Unlink']
 				] ;
 			";
 		}
