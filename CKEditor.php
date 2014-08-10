@@ -71,12 +71,10 @@ JS;
 		{
 			$script = "
 				CKEDITOR.config.toolbar = [
-					['Maximize','Styles','Format','Font','FontSize'],
-					'/',
-					['Bold','Italic','Underline','StrikeThrough','-','Undo','Redo','-','Cut','Copy','Paste','Find','Replace','-','Outdent','Indent','-','Print'],
-					'/',
+					['Maximize','Format'],
+					['Bold','Italic','Underline','StrikeThrough','-','Print'],
 					['NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-					['Image','Table','-','Link','TextColor','BGColor','Source']
+					['Image','Table','-','Link']
 				] ;
 			";
 		}
