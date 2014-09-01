@@ -9,6 +9,7 @@ class CKEditor extends Widget
 	const TYPE_FULL = 'full';
 	const TYPE_STANDARD = 'standard';
 	const TYPE_SIMPLE = 'simple';
+	const TYPE_INLINE = 'inline';
 
 	/**
 	 * "full", "standard", "simple"
@@ -27,6 +28,9 @@ class CKEditor extends Widget
 	 */
 	public $language;
 
+	/**
+	 * @var array
+	 */
 	public $pluginOptions = [];
 
 	/**
@@ -41,35 +45,41 @@ class CKEditor extends Widget
 
 		$dir = $bundle->baseUrl;
 
-		$js = <<<JS
-			CKEDITOR.replaceAll(function(textarea, config) {
-				config.height = '{$this->height}';
-				config.language = '{$this->language}';
-				config.filebrowserBrowseUrl = '$dir/kcfinder/browse.php?type=files';
-				config.filebrowserImageBrowseUrl = '$dir/kcfinder/browse.php?type=images';
-				config.filebrowserFlashBrowseUrl = '$dir/kcfinder/browse.php?type=flash';
-				config.filebrowserUploadUrl = '$dir/kcfinder/upload.php?type=files';
-				config.filebrowserImageUploadUrl = '$dir/kcfinder/upload.php?type=images';
-				config.filebrowserFlashUploadUrl = '$dir/kcfinder/upload.php?type=flash';
-				config.allowedContent = true;
-			});
+		if ( $this->type != CKEditor::TYPE_INLINE)
+		{
+			$js = <<<JS
+				CKEDITOR.replaceAll(function(textarea, config) {
+					config.height = '{$this->height}';
+
+				});
 JS;
 
-		$this->view->registerJs($js);
+			$this->view->registerJs($js);
+		}
 
-		$script = '';
 
-		if ( $this->type == 'simple' )
+		$script = "
+			CKEDITOR.config.language = '{$this->language}';
+			CKEDITOR.config.filebrowserBrowseUrl = '$dir/kcfinder/browse.php?type=files';
+			CKEDITOR.config.filebrowserImageBrowseUrl = '$dir/kcfinder/browse.php?type=images';
+			CKEDITOR.config.filebrowserFlashBrowseUrl = '$dir/kcfinder/browse.php?type=flash';
+			CKEDITOR.config.filebrowserUploadUrl = '$dir/kcfinder/upload.php?type=files';
+			CKEDITOR.config.filebrowserImageUploadUrl = '$dir/kcfinder/upload.php?type=images';
+			CKEDITOR.config.filebrowserFlashUploadUrl = '$dir/kcfinder/upload.php?type=flash';
+			CKEDITOR.config.allowedContent = true;
+		";
+
+		if ( $this->type == CKEditor::TYPE_SIMPLE )
 		{
-			$script = "
+			$script .= "
 				CKEDITOR.config.toolbar = [
 					['Maximize','Format','Bold','Italic','Underline','StrikeThrough','-','NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Link', 'Unlink']
 				] ;
 			";
 		}
-		elseif  ( $this->type == 'standard' )
+		elseif  ( $this->type == CKEditor::TYPE_STANDARD )
 		{
-			$script = "
+			$script .= "
 				CKEDITOR.config.toolbar = [
 					['Maximize','Format'],
 					['Bold','Italic','Underline','StrikeThrough','-','Print'],
@@ -78,10 +88,20 @@ JS;
 				] ;
 			";
 		}
-
-		if ( $script !== '' )
+		elseif  ( $this->type == CKEditor::TYPE_INLINE )
 		{
-			$this->view->registerJs($script);
+			$script .= "
+				CKEDITOR.config.extraPlugins = 'inlinesave';
+
+				CKEDITOR.config.toolbar = [
+					['Inlinesave','Format'],
+					['Bold','Italic','Underline','StrikeThrough','-','Print'],
+					['NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+					['Image','Table','-','Link', 'Unlink']
+				] ;
+			";
 		}
+
+		$this->view->registerJs($script);
 	}
 } 
