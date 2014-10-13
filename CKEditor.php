@@ -29,9 +29,9 @@ class CKEditor extends Widget
 	public $language;
 
 	/**
-	 * @var array
+	 * @var string
 	 */
-	public $pluginOptions = [];
+	public $toolBarConfig;
 
 	/**
 	 * @return string|void
@@ -69,11 +69,15 @@ JS;
 			CKEDITOR.config.allowedContent = true;
 		";
 
-		if ( $this->type == CKEditor::TYPE_SIMPLE )
+		if ( $this->toolBarConfig )
+		{
+			$script .= $this->toolBarConfig;
+		}
+		elseif ( $this->type == CKEditor::TYPE_SIMPLE )
 		{
 			$script .= "
 				CKEDITOR.config.toolbar = [
-					['Maximize','Format','Bold','Italic','Underline','StrikeThrough','-','NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Link', 'Unlink']
+					['Maximize','Format','Bold','Italic','Underline','StrikeThrough','RemoveFormat','-','NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Link', 'Unlink']
 				] ;
 			";
 		}
@@ -82,7 +86,7 @@ JS;
 			$script .= "
 				CKEDITOR.config.toolbar = [
 					['Maximize','Format'],
-					['Bold','Italic','Underline','StrikeThrough','-','Print'],
+					['Bold','Italic','Underline','StrikeThrough','RemoveFormat','-','TextColor'],
 					['NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
 					['Image','Table','-','Link', 'Unlink']
 				] ;
@@ -94,8 +98,8 @@ JS;
 				CKEDITOR.config.extraPlugins = 'inlinesave';
 
 				CKEDITOR.config.toolbar = [
-					['Inlinesave','Format'],
-					['Bold','Italic','Underline','StrikeThrough','-','Print'],
+					['Inlinesave', 'Inlinecancel','Format'],
+					['Bold','Italic','Underline','StrikeThrough','RemoveFormat','-','TextColor'],
 					['NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
 					['Image','Table','-','Link', 'Unlink']
 				] ;

@@ -8,7 +8,7 @@ CKEDITOR.plugins.add( 'inlinesave',
 				{
 
 					addData();
-					
+
 					function addData() {
 						var data = editor.getData();
 						var dataID = editor.container.getId();
@@ -43,11 +43,26 @@ CKEDITOR.plugins.add( 'inlinesave',
 
 				}
 			});
+		editor.addCommand( 'inlinecancel',
+			{
+				exec : function( editor )
+				{
+					if (confirm('Cancel without saving ?')) {
+						window.location.reload();
+					}
+				}
+			});
 		editor.ui.addButton( 'Inlinesave',
 		{
 			label: 'Save',
 			command: 'inlinesave',
-			icon: this.path + 'images/inlinesave.png'
+			icon: this.path + 'images/inlinecancel.png'
+		} );
+		editor.ui.addButton( 'Inlinecancel',
+		{
+			label: 'Cancel',
+			command: 'inlinecancel',
+			icon: this.path + 'images/inlinecancel.png'
 		} );
 	}
 } );
