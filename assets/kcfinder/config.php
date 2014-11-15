@@ -16,6 +16,25 @@
 // you are using session configuration.
 // See http://kcfinder.sunhater.com/install for setting descriptions
 
+$appDir =  __DIR__. '/../../../../../';
+
+if ( is_dir($appDir . 'public_html') )
+{
+	$uploadDir = $appDir . 'public_html/uploads';
+}
+elseif ( is_dir($appDir . 'htdocs') )
+{
+	$uploadDir = $appDir . 'htdocs/uploads';
+}
+elseif ( is_dir($appDir . 'web') )
+{
+	$uploadDir = $appDir . 'web/uploads';
+}
+else
+{
+	die('Could not find web directory');
+}
+
 $_CONFIG = array(
 
     'disabled' => false,
@@ -27,7 +46,7 @@ $_CONFIG = array(
 
     //'uploadDir' => "",
     //'uploadURL' => __DIR__."/../uploads",
-    'uploadDir' => __DIR__."/../../../uploads",
+    'uploadDir' => $uploadDir,
     'uploadURL' => "/uploads",
     //'uploadURL' => "",
 
