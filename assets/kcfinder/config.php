@@ -18,22 +18,28 @@
 
 $appDir =  __DIR__. '/../../../../../';
 
-if ( is_dir($appDir . 'public_html') )
+$webDirCandidates = array(
+	'public_html',
+	'htdocs',
+	'web',
+);
+
+$uploadDir = null;
+
+foreach ($webDirCandidates as $candidate)
 {
-	$uploadDir = $appDir . 'public_html/uploads';
+	if ( is_dir($appDir . $candidate) )
+	{
+		$uploadDir = $appDir . $candidate . '/uploads';
+		break;
+	}
 }
-elseif ( is_dir($appDir . 'htdocs') )
-{
-	$uploadDir = $appDir . 'htdocs/uploads';
-}
-elseif ( is_dir($appDir . 'web') )
-{
-	$uploadDir = $appDir . 'web/uploads';
-}
-else
+
+if ( $uploadDir === null )
 {
 	die('Could not find web directory');
 }
+
 
 $_CONFIG = array(
 
