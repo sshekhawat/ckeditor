@@ -34,6 +34,14 @@ class CKEditor extends Widget
 	public $toolBarConfig;
 
 	/**
+	 * If empty, all textarea's will be replaced
+	 *
+	 * @var string
+	 */
+	public $replaceByClass;
+
+
+	/**
 	 * @return string|void
 	 */
 	public function run()
@@ -45,20 +53,26 @@ class CKEditor extends Widget
 
 		$dir = $bundle->baseUrl;
 
+		$script = '';
+
 		if ( $this->type != CKEditor::TYPE_INLINE)
 		{
-			$js = <<<JS
+			$script .= "
 				CKEDITOR.replaceAll(function(textarea, config) {
 					config.height = '{$this->height}';
+					";
 
-				});
-JS;
+			if ( $this->replaceByClass ) {
+				$script .= "    var classRegex = new RegExp('(?:^| )' + '" . $this->replaceByClass . "' + '(?:$| )');\n";
+				$script .= "    if (!classRegex.test(textarea.className))\n";
+				$script .= "        return false;\n";
+			}
 
-			$this->view->registerJs($js);
+			$script	.= "});";
 		}
 
 
-		$script = "
+		$script .= "
 			CKEDITOR.config.language = '{$this->language}';
 			CKEDITOR.config.filebrowserBrowseUrl = '$dir/kcfinder/browse.php?type=files';
 			CKEDITOR.config.filebrowserImageBrowseUrl = '$dir/kcfinder/browse.php?type=images';
