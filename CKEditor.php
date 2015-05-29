@@ -99,10 +99,10 @@ class CKEditor extends Widget
 		{
 			$script .= "
 				CKEDITOR.config.toolbar = [
-					['Maximize','Format'],
+					['Maximize', 'Format'],
 					['Bold','Italic','Underline','StrikeThrough','RemoveFormat','-','TextColor'],
 					['NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-					['Image','Table','-','Link', 'Unlink']
+					['Image','Table','-','Link', 'Unlink', 'Anchor'], ['Source'],
 				] ;
 			";
 		}
